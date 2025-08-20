@@ -8,14 +8,6 @@
     <h2 class="text-lg md:text-xl font-semibold mb-4">Add New Task</h2>
     
     <%= form_with model: @task, local: true do |form| %>
-      <% if @task.errors.any? %>
-        <div class="bg-red-50 border border-red-200 rounded p-3 mb-4">
-          <% @task.errors.full_messages.each do |message| %>
-            <p class="text-red-600 text-sm"><%= message %></p>
-          <% end %>
-        </div>
-      <% end %>
-      
       <div class="flex flex-col sm:flex-row gap-3">
         <%= form.text_field :title, 
             placeholder: "What needs to be done?", 

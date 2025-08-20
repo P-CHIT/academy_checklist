@@ -29,8 +29,11 @@ class TasksController < ApplicationController
         format.html { redirect_to root_path, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+      @tasks = Task.all.order(created_at: :desc)
+      @task = Task.new
+      flash.now[:alert] = "Title must not be null."
+      format.html { render :index, status: :unprocessable_entity }
+      format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
