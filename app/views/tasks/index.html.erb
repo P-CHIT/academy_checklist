@@ -10,6 +10,9 @@
           <%= image_tag "profile_pic.jpg", alt: "profile Photo", class: "w-full h-full object-cover" %>
         </div>
         <p class="text-sm text-gray-500">Phuchit Uappapunsetty</p>
+        <%= link_to brag_quests_path, class: "inline-block px-4 py-2 bg-black text-white text-sm rounded-lg font-medium hover:bg-gray-800 transition-colors" do %>
+          📄 Brag Document 2025
+        <% end %>
       </div>
 
       <div class="bg-white rounded-lg shadow p-4">
@@ -85,6 +88,9 @@
             <%= image_tag "profile_pic.jpg", alt: "Profile Photo", class: "w-full h-full object-cover" %>
           </div>
           <h3 class="text-xl font-semibold text-gray-800 mb-2">Phuchit Uappapunsetty</h3>
+          <%= link_to brag_quests_path, class: "inline-block px-6 py-3 bg-black text-white rounded-xl font-semibold hover:bg-gray-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl" do %>
+            📄 Brag Document 2025
+          <% end %>
         </div>
       </div>
 

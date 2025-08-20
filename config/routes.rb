@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "brag" => "tasks#brag", as: :brag_quests
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
