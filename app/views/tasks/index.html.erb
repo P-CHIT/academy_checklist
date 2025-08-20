@@ -1,31 +1,65 @@
-<% content_for :title, "Tasks" %>
-
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Tasks</h1>
-    <h1 class="font-bold text-4xl">New task</h1>
-
-  <%= render "form", task: @task %>
+<div class="max-w-2xl mx-auto p-4">
+  <div class="text-center mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">My Checklist</h1>
+    <p class="text-gray-600">Phuchit Uappapunsetty</p>
   </div>
 
-  <div id="tasks" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @tasks.any? %>
-      <% @tasks.each do |task| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render task %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", task, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_task_path(task), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Destroy", task, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
+  <div class="bg-white rounded-lg shadow p-4 md:p-6 mb-6">
+    <h2 class="text-lg md:text-xl font-semibold mb-4">Add New Task</h2>
+    
+    <%= form_with model: @task, local: true do |form| %>
+      <% if @task.errors.any? %>
+        <div class="bg-red-50 border border-red-200 rounded p-3 mb-4">
+          <% @task.errors.full_messages.each do |message| %>
+            <p class="text-red-600 text-sm"><%= message %></p>
+          <% end %>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-center my-10">No tasks found.</p>
+      
+      <div class="flex flex-col sm:flex-row gap-3">
+        <%= form.text_field :title, 
+            placeholder: "What needs to be done?", 
+            class: "flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        
+        <%= form.submit "Add Task", 
+            class: "px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium cursor-pointer" %>
+      </div>
     <% end %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="p-4 md:p-6 border-b">
+      <h2 class="text-lg md:text-xl font-semibold">Your Tasks (<%= @tasks.count %>)</h2>
+    </div>
+    
+    <div class="divide-y">
+      <% if @tasks.any? %>
+        <% @tasks.each do |task| %>
+          <div class="p-4 md:p-6 hover:bg-gray-50">
+            <div class="flex items-center justify-between gap-4">
+              <div class="flex items-center space-x-3 flex-1 min-w-0">
+                <div class="w-5 h-5 border-2 border-gray-300 rounded flex-shrink-0 <%= 'bg-blue-500 border-blue-500' if task.status %>">
+                  <% if task.status %>
+                    <svg class="w-full h-full text-white p-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                  <% end %>
+                </div>
+
+                <span class="text-gray-800 break-words <%= 'line-through text-gray-500' if task.status %>">
+                  <%= task.title %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="p-8 md:p-12 text-center text-gray-500">
+          <div class="text-4xl md:text-6xl mb-4">📝</div>
+          <p class="text-lg md:text-xl">No tasks yet!</p>
+          <p class="text-sm md:text-base">Add your first task above to get started.</p>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
