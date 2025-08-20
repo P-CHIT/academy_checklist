@@ -62,7 +62,6 @@
                   <%= button_to task_path(task), 
                       method: :delete,
                       class: "text-red-600 lg:text-gray-400 hover:text-red-800 lg:hover:text-red-500 p-1 lg:p-2 bg-transparent border-none cursor-pointer lg:hover:bg-red-50 lg:rounded-full lg:transition-all",
-                      data: { turbo_confirm: "Are you sure?" },
                       title: "Delete task" do %>
                     🗑️
                   <% end %>
