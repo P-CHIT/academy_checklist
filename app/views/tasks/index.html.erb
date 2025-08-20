@@ -20,22 +20,9 @@
 
       <div class="lg:flex-1 lg:flex lg:flex-col lg:pt-6 space-y-4 lg:space-y-4">
         
-        <div class="bg-white rounded-lg lg:rounded-2xl shadow lg:shadow-xl p-4 lg:p-6">
-          <h2 class="text-lg lg:text-xl font-semibold mb-4 lg:text-center">Add New Task</h2>
-          
-          <%= form_with model: @task, local: true do |form| %>
-            <div class="space-y-3 lg:space-y-0 lg:flex lg:gap-4">
-              <%= form.text_field :title, 
-                  placeholder: "What needs to be done?", 
-                  class: "w-full lg:flex-1 px-4 py-3 border lg:border-2 border-gray-300 rounded-lg lg:rounded-xl focus:outline-none focus:ring-2 lg:focus:ring-4 focus:ring-blue-500 lg:focus:ring-blue-200 lg:focus:border-blue-500 text-base" %>
-              
-              <%= form.submit "Add Task", 
-                  class: "w-full lg:w-auto px-6 py-3 bg-black text-white rounded-lg lg:rounded-xl font-medium lg:font-semibold cursor-pointer lg:shadow-lg lg:hover:shadow-xl lg:hover:scale-105 transition-all" %>
-            </div>
-          <% end %>
-        </div>
+        <%= render 'form', task: @task %>
 
-
+        <!-- Tasks List - Now using partials -->
         <div class="bg-white rounded-lg lg:rounded-2xl shadow lg:shadow-xl overflow-hidden">
           <div class="p-4 border-b lg:bg-gradient-to-r lg:from-gray-50 lg:to-white">
             <h2 class="text-lg lg:text-xl font-semibold lg:text-center">Your Tasks (<%= @tasks.count %>)</h2>
@@ -44,28 +31,7 @@
           <div class="divide-y max-h-96 lg:max-h-[350px] overflow-y-auto">
             <% if @tasks.any? %>
               <% @tasks.each do |task| %>
-                <div class="p-4 flex items-center justify-between hover:bg-gray-50 lg:transition-colors">
-                  <div class="flex items-center space-x-3 lg:space-x-4 flex-1">
-                    <%= button_to toggle_task_path(task), 
-                        method: :patch,
-                        class: "w-6 h-6 rounded cursor-pointer bg-transparent flex items-center justify-center lg:transition-all lg:transform lg:hover:scale-110 #{task.status ? '' : 'border-2 border-gray-300 hover:border-gray-300 lg:hover:border-green-500'}" do %>
-                      <% if task.status %>
-                        <%= image_tag "check.png", alt: "Completed", class: "h-5.5 w-5.5" %>
-                      <% end %>
-                    <% end %>
-                    
-                    <span class="break-all text-gray-800 text-sm lg:text-base lg:font-medium <%= task.status ? 'line-through text-gray-500' : '' %>">
-                      <%= task.title %>
-                    </span>
-                  </div>
-                  
-                  <%= button_to task_path(task), 
-                      method: :delete,
-                      class: "text-red-600 lg:text-gray-400 hover:text-red-800 lg:hover:text-red-500 p-1 lg:p-2 bg-transparent border-none cursor-pointer lg:hover:bg-red-50 lg:rounded-full lg:transition-all",
-                      title: "Delete task" do %>
-                    🗑️
-                  <% end %>
-                </div>
+                <%= render 'task', task: task %>
               <% end %>
             <% else %>
               <div class="p-8 lg:p-12 text-center text-gray-500">

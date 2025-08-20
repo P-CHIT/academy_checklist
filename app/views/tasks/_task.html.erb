@@ -1,10 +1,22 @@
-<div id="<%= dom_id task %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= task.title %>
+<div class="p-4 flex items-center justify-between hover:bg-gray-50 lg:transition-colors">
+  <div class="flex items-center space-x-3 lg:space-x-4 flex-1">
+    <%= button_to toggle_task_path(task), 
+        method: :patch,
+        class: "w-6 h-6 rounded cursor-pointer bg-transparent flex items-center justify-center lg:transition-all lg:transform lg:hover:scale-110 #{task.status ? '' : 'border-2 border-gray-300 hover:border-gray-300 lg:hover:border-green-500'}" do %>
+      <% if task.status %>
+        <%= image_tag "check.png", alt: "Completed", class: "h-5.5 w-5.5" %>
+      <% end %>
+    <% end %>
+    
+    <span class="break-all text-gray-800 text-sm lg:text-base lg:font-medium <%= task.status ? 'line-through text-gray-500' : '' %>">
+      <%= task.title %>
+    </span>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Status:</strong>
-    <%= task.status? ? "Yes" : "No" %>
-  </div>
+  
+  <%= button_to task_path(task), 
+      method: :delete,
+      class: "text-red-600 lg:text-gray-400 hover:text-red-800 lg:hover:text-red-500 p-1 lg:p-2 bg-transparent border-none cursor-pointer lg:hover:bg-red-50 lg:rounded-full lg:transition-all",
+      title: "Delete task" do %>
+    🗑️
+  <% end %>
 </div>
