@@ -36,30 +36,26 @@
       <% if @tasks.any? %>
         <% @tasks.each do |task| %>
           <div class="p-4 md:p-6 hover:bg-gray-50">
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center space-x-3 flex-1 min-w-0">
-                <div class="w-5 h-5 border-2 border-gray-300 rounded flex-shrink-0 <%= 'bg-blue-500 border-blue-500' if task.status %>">
-                  <% if task.status %>
-                    <svg class="w-full h-full text-white p-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                  <% end %>
-                </div>
-              <div class="flex justify-between items-center w-full">
-                  <div class="flex text-gray-800 break-words <%= 'line-through text-gray-500' if task.status %>">
-                    <%= task.title %>
-                  </div>
-
-                  <div class="flex space-x-2 flex-shrink-0">
-                    <%= button_to task_path(task), 
-                        method: :delete,
-                        class: "text-red-600 hover:text-red-800 p-2 bg-transparent border-none cursor-pointer",
-                        data: { turbo_confirm: "Are you sure?" },
-                        title: "Delete task" do %>
-                      🗑️
-                    <% end %>
-                </div>
+            <div class="flex items-center gap-4">
+              <div class="w-5 h-5 border-2 border-gray-300 rounded flex-shrink-0 <%= 'bg-blue-500 border-blue-500' if task.status %>">
+                <% if task.status %>
+                  <svg class="w-full h-full text-white p-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                <% end %>
               </div>
+              
+              <div class="flex-1 text-gray-800 break-words <%= 'line-through text-gray-500' if task.status %>">
+                <%= task.title %>
+              </div>
+
+              <%= button_to task_path(task), 
+                  method: :delete,
+                  class: "text-red-600 hover:text-red-800 p-2 bg-transparent border-none cursor-pointer flex-shrink-0",
+                  data: { turbo_confirm: "Are you sure?" },
+                  title: "Delete task" do %>
+                🗑️
+              <% end %>
             </div>
           </div>
         <% end %>
