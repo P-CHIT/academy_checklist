@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root "tasks#index"
-  match "*unmatched", to: redirect("/"), via: :all
-  
+
   resources :tasks do
     member do
       patch :toggle
@@ -11,4 +10,7 @@ Rails.application.routes.draw do
   get "brag" => "tasks#brag", as: :brag_quests
 
   get "up" => "rails/health#show", as: :rails_health_check
+
+  match "*path", to: redirect("/"), via: :all
+  match "*path/", to: redirect("/"), via: :all
 end
