@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root "tasks#index"
+  match "*unmatched", to: redirect("/"), via: :all
+  
   resources :tasks do
     member do
       patch :toggle
