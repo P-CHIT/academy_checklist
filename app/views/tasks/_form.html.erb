@@ -5,10 +5,16 @@
     <div class="space-y-3 lg:space-y-0 lg:flex lg:gap-4">
       <%= form.text_field :title, 
           placeholder: "What needs to be done?", 
-          class: "w-full lg:flex-1 px-4 py-3 border lg:border-2 border-gray-300 rounded-lg lg:rounded-xl focus:outline-none focus:ring-2 lg:focus:ring-4 focus:ring-blue-500 lg:focus:ring-blue-200 lg:focus:border-blue-500 text-base" %>
+          class: "w-full lg:flex-1 px-4 py-3 border lg:border-2 border-gray-300 rounded-lg lg:rounded-xl focus:outline-none focus:ring-2 lg:focus:ring-4 focus:ring-blue-500 lg:focus:ring-blue-200 lg:focus:border-blue-500 text-base", 
+          data: {
+            testid: "task-title-input"
+          } %>
       
       <%= form.submit "Add Task", 
-          class: "w-full lg:w-auto px-6 py-3 bg-black text-white rounded-lg lg:rounded-xl font-medium lg:font-semibold cursor-pointer lg:shadow-lg lg:hover:shadow-xl lg:hover:scale-105 transition-all" %>
+          class: "w-full lg:w-auto px-6 py-3 bg-black text-white rounded-lg lg:rounded-xl font-medium lg:font-semibold cursor-pointer lg:shadow-lg lg:hover:shadow-xl lg:hover:scale-105 transition-all",
+          data: {
+            testid: "create-task-button"
+          } %>
     </div>
   <% end %>
 </div>

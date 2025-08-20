@@ -9,7 +9,7 @@
       <% end %>
     <% end %>
     
-    <span class="break-all text-gray-800 text-sm lg:text-base lg:font-medium <%= task.status ? 'line-through text-gray-500' : '' %>">
+    <span class="break-all text-gray-800 text-sm lg:text-base lg:font-medium <%= task.status ? 'line-through text-gray-500' : '' %>" data-testid="task-title-<%= task.id %>">
       <%= task.title %>
     </span>
   </div>
