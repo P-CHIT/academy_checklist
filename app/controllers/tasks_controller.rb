@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ destroy toggle ]
 
   # GET /tasks or /tasks.json
   def index
@@ -7,22 +7,10 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  # GET /tasks/1 or /tasks/1.json
-  def show
-  end
-
-  # GET /tasks/new
-  def new
-    @task = Task.new
-  end
-
-  # GET /tasks/1/edit
-  def edit
-  end
-
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
+    @task.status = false
 
     respond_to do |format|
       if @task.save
@@ -38,17 +26,9 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
-  def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
-    end
+  def toggle
+    @task.update!(status: !@task.status)
+    redirect_to root_path
   end
 
   # DELETE /tasks/1 or /tasks/1.json
