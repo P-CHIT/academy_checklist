@@ -14,28 +14,40 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
+        @saved_task = @task
+        @task = Task.new
+        @tasks = Task.all.order(created_at: :desc)
+        
+        format.turbo_stream
         format.html { redirect_to root_path, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
-      @tasks = Task.all.order(created_at: :desc)
-      @task = Task.new
-      flash.now[:alert] = "Title must not be null."
-      format.html { render :index, status: :unprocessable_entity }
-      format.json { render json: @task.errors, status: :unprocessable_entity }
+        @tasks = Task.all.order(created_at: :desc)
+        flash.now[:alert] = "Title must not be null."
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("task_form", partial: "form", locals: { task: @task }) }
+        format.html { render :index, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def toggle
     @task.update!(status: !@task.status)
-    redirect_to root_path
+    @tasks = Task.all.order(created_at: :desc)
+    
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy!
+    @tasks = Task.all.order(created_at: :desc)
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to root_path, alert: "Task was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end

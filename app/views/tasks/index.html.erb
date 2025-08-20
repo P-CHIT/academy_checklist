@@ -20,15 +20,16 @@
 
       <div class="lg:flex-1 lg:flex lg:flex-col lg:pt-6 space-y-4 lg:space-y-4">
         
-        <%= render 'form', task: @task %>
+        <div id="task_form">
+          <%= render 'form', task: @task %>
+        </div>
 
-        <!-- Tasks List - Now using partials -->
         <div class="bg-white rounded-lg lg:rounded-2xl shadow lg:shadow-xl overflow-hidden">
-          <div class="p-4 border-b lg:bg-gradient-to-r lg:from-gray-50 lg:to-white">
+          <div id="tasks_header" class="p-4 border-b lg:bg-gradient-to-r lg:from-gray-50 lg:to-white">
             <h2 class="text-lg lg:text-xl font-semibold lg:text-center">Your Tasks (<%= @tasks.count %>)</h2>
           </div>
           
-          <div class="divide-y max-h-96 lg:max-h-[350px] overflow-y-auto">
+          <div id="tasks_list" class="divide-y max-h-96 lg:max-h-[350px] overflow-y-auto">
             <% if @tasks.any? %>
               <% @tasks.each do |task| %>
                 <%= render 'task', task: task %>
