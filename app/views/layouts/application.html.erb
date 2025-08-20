@@ -19,6 +19,12 @@
       </div>
     <% end %>
 
+    <% if alert %>
+      <div class="bg-red-500 text-white px-6 py-3 text-center">
+        <%= alert %>
+      </div>
+    <% end %>
+
     <main class="container mx-auto py-8">
       <%= yield %>
     </main>
